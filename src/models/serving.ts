@@ -1,7 +1,7 @@
-import { Food } from './food';
+import { BaseFood } from './food';
 
 export interface Serving {
     id: string;
     size: number;
-    food: Food;
+    food: BaseFood;
 }
