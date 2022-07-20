@@ -1,11 +1,9 @@
-import { Dialect, Sequelize } from 'sequelize';
+const config = {
+    database: process.env.DB_NAME,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT)
+};
 
-const dbName = process.env.DB_NAME as string;
-const dbUser = process.env.DB_USER as string;
-const dbHost = process.env.DB_HOST;
-const dbDriver = process.env.DB_DRIVER as Dialect;
-const dbPassword = process.env.DB_PASSWORD;
-
-const connection = new Sequelize(dbName, dbUser, dbPassword, { host: dbHost, dialect: dbDriver });
-
-export default connection;
+export default config;
