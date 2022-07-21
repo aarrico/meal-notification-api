@@ -6,7 +6,7 @@ const app: Application = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', async(req: Request, res: Response): Promise<Response> => {
+app.get('/', async (req: Request, res: Response): Promise<Response> => {
     return res.status(200).send({ message: 'Hello!'});
 });
 

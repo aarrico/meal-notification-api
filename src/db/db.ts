@@ -1,6 +1,4 @@
-import Pool from 'pg';
-import config from './config';
+import { DataSource } from "typeorm";
+import config from "./config";
 
-const db = new Pool.Pool(config);
-
-export default db;
+export const db = new DataSource(config);
