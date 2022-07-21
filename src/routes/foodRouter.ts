@@ -1,57 +1,67 @@
 import express, { Request, Response } from "express";
-import { BaseFood, Food } from "../models/food";
-import { create, findAll, find, remove } from "../controllers/foodController";
+import {
+  findAll,
+  findById,
+  create,
+  remove,
+} from "../controllers/foodController";
+import { Food } from "../entities/food.entity";
 
 const router = express.Router();
 
-router.get('/', async (req: Request, res: Response) => {
+router.get("/", async (req: Request, res: Response) => {
   try {
-    const foods: Food[] = await findAll();
+    const sortField = req.params.sortField || "name";
+    const sortDirection = req.params.sortDirection.toUpperCase() || "DESC";
 
-    if (foods) {
-      return res.status(200).send(foods);
+    if (sortDirection === "ASC" || sortDirection === "DESC") {
+      const foods: Food[] = await findAll(sortField, sortDirection);
+      if (foods) {
+        return res.send(foods);
+      }
+    } else {
+      throw "Sort direction must be ASC or DESC.";
     }
 
-    res.status(404).send('food not found');
-  } catch (err) {
+    res.status(404).send("food not found");
+  } catch (err: any) {
     res.status(500).send(err.message);
   }
 });
 
-router.get('/:id', async (req: Request, res: Response) => {
+router.get("/:id", async (req: Request, res: Response) => {
   try {
-    const id = Number(req.params.id);
-    const food: Food = await find(id);
+    const id = req.params.id;
+    const food: Food = await findById(id);
 
     if (food) {
       return res.status(200).send(food);
     }
 
-    res.status(404).send('food not found');
-  } catch (err) {
+    res.status(404).send("food not found");
+  } catch (err: any) {
     res.status(500).send(err.message);
   }
 });
 
-router.post('/', async (req: Request, res: Response) => {
+router.post("/", async (req: Request, res: Response) => {
   try {
-    const newFood: BaseFood = req.body;
-    const id = await create(newFood);
+    const id = await create(req.body);
 
-    res.status(201).json({id: id});
-  } catch (err) {
-    res.status(500).send(err.message);
+    res.status(201).json({ id: id });
+  } catch (err: any) {
+    res.status(400).send("Food already exists!");
   }
 });
 
-router.delete('/:id', async (req: Request, res: Response) => {
+router.delete("/:id", async (req: Request, res: Response) => {
   try {
-    const id = Number(req.params.id);
+    const id = req.params.id;
 
     await remove(id);
 
     res.status(204);
-  } catch (err) {
+  } catch (err: any) {
     res.status(500).send(err.message);
   }
 });
