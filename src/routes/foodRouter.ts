@@ -7,9 +7,9 @@ import {
 } from "../controllers/foodController";
 import { Food } from "../entities/food.entity";
 
-const router = express.Router();
+const foodRouter = express.Router();
 
-router.get("/", async (req: Request, res: Response) => {
+foodRouter.get("/", async (req: Request, res: Response) => {
   try {
     const sortField = req.params.sortField || "name";
     const sortDirection = req.params.sortDirection.toUpperCase() || "DESC";
@@ -29,7 +29,7 @@ router.get("/", async (req: Request, res: Response) => {
   }
 });
 
-router.get("/:id", async (req: Request, res: Response) => {
+foodRouter.get("/:id", async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
     const food: Food = await findById(id);
@@ -44,7 +44,7 @@ router.get("/:id", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/", async (req: Request, res: Response) => {
+foodRouter.post("/", async (req: Request, res: Response) => {
   try {
     const id = await create(req.body);
 
@@ -54,7 +54,7 @@ router.post("/", async (req: Request, res: Response) => {
   }
 });
 
-router.delete("/:id", async (req: Request, res: Response) => {
+foodRouter.delete("/:id", async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
 
@@ -65,3 +65,5 @@ router.delete("/:id", async (req: Request, res: Response) => {
     res.status(500).send(err.message);
   }
 });
+
+export default foodRouter;
