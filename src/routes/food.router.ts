@@ -4,7 +4,7 @@ import {
   findById,
   create,
   remove,
-} from "../controllers/foodController";
+} from "../controllers/food.controller";
 import { Food } from "../entities/food.entity";
 
 const foodRouter = express.Router();

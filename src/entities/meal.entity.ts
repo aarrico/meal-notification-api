@@ -1,15 +1,21 @@
-import { Column, Entity, JoinColumn, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Serving } from './serving.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { Serving } from "./serving.entity";
 
-@Entity('meal')
+@Entity("meal")
 export class Meal {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
-    @Column()
-    order: number;
+  @Column()
+  order: number;
 
-    @JoinColumn()
-    @ManyToMany(() => Serving)
-    servings: Serving[];
+  @JoinColumn()
+  @ManyToMany(() => Serving)
+  servings: Serving[];
 }

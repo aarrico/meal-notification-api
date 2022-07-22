@@ -1,15 +1,21 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Food } from './food.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { Food } from "./food.entity";
 
-@Entity('serving')
+@Entity("serving")
 export class Serving {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
-    @Column()
-    size: number;
+  @Column()
+  size: number;
 
-    @OneToOne(() => Food)
-    @JoinColumn()
-    food: Food;
+  @OneToOne(() => Food)
+  @JoinColumn()
+  food: Food;
 }

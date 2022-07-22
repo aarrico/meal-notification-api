@@ -4,26 +4,33 @@ import { Repository } from "typeorm";
 
 const foodRepo: Repository<Food> = db.getRepository(Food);
 
-export const findAll = async (sortField: string, sortDirection: 'ASC' | 'DESC'): Promise<Food[]> => {
+export const findAll = async (
+  sortField: string,
+  sortDirection: "ASC" | "DESC"
+): Promise<Food[]> => {
   try {
-    return await foodRepo.createQueryBuilder('food').select('*').orderBy(`food.${sortField}`, sortDirection).getMany();
+    return await foodRepo
+      .createQueryBuilder("food")
+      .select("*")
+      .orderBy(`food.${sortField}`, sortDirection)
+      .getMany();
   } catch (err) {
     throw err;
   }
-}
+};
 
 export const findById = async (id: string): Promise<Food> => {
   try {
-    const food = await foodRepo.findOneOrFail({ 
+    const food = await foodRepo.findOneOrFail({
       where: {
-        id: id
-      }
-     });
+        id: id,
+      },
+    });
     return food;
   } catch (err) {
     throw err;
   }
-}
+};
 
 export const create = async (data: any): Promise<string | undefined> => {
   try {
@@ -39,12 +46,12 @@ export const create = async (data: any): Promise<string | undefined> => {
   } catch (err) {
     throw err;
   }
-}
+};
 
-export const remove = async (id: string) => {  
+export const remove = async (id: string) => {
   try {
     await foodRepo.delete(id);
   } catch (err) {
     throw err;
   }
-}
+};
